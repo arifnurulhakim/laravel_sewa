@@ -45,21 +45,15 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="harga">Harga</label>
-                            <input type="number" class="form-control @error('harga') is-invalid @enderror" id="harga" placeholder="Harga" name="harga" value="{{$barang->harga ?? old('harga')}}">
-                            @error('harga') <span class="text-danger">{{$message}}</span> @enderror
+                            <label for="harga_sewa">Harga Sewa</label>
+                            <input type="number" class="form-control @error('harga_sewa') is-invalid @enderror" id="harga_sewa" placeholder="Harga" name="harga_sewa" value="{{$barang->harga_sewa ?? old('harga_sewa')}}">
+                            @error('harga_sewa') <span class="text-danger">{{$message}}</span> @enderror
                         </div>
 
                         <div class="form-group">
-                            <label for="ganti_rusak">Biaya Ganti Barang Rusak</label>
-                            <input type="number" class="form-control @error('ganti_rusak') is-invalid @enderror" id="ganti_rusak" placeholder="Biaya Ganti Barang Rusak" name="ganti_rusak" value="{{$barang->ganti_rusak ?? old('ganti_rusak')}}">
-                            @error('ganti_rusak') <span class="text-danger">{{$message}}</span> @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="ganti_hilang">Biaya Ganti Barang Hilang</label>
-                            <input type="number" class="form-control @error('ganti_hilang') is-invalid @enderror" id="ganti_hilang" placeholder="Biaya Ganti Barang Hilang" name="ganti_hilang" value="{{$barang->ganti_hilang ?? old('ganti_hilang')}}">
-                            @error('ganti_hilang') <span class="text-danger">{{$message}}</span> @enderror
+                            <label for="harga_jual">Harga Jual</label>
+                            <input type="number" class="form-control @error('harga_jual') is-invalid @enderror" id="harga_jual" placeholder="Harga" name="harga_jual" value="{{$barang->harga_jual ?? old('harga_jual')}}">
+                            @error('harga_jual') <span class="text-danger">{{$message}}</span> @enderror
                         </div>
 
                         <div class="form-group">
