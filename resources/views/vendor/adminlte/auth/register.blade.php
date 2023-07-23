@@ -53,6 +53,26 @@
             @enderror
         </div>
 
+        {{-- Nomor telepon field --}}
+<div class="input-group mb-3">
+    <input type="text" name="nomor_tlpn" class="form-control" 
+           value="{{ old('nomor_tlpn') }}" placeholder="{{ __('Nomor Telepon') }}" maxlength="15">
+
+    <div class="input-group-append">
+        <div class="input-group-text">
+            <span class="fas fa-phone {{ config('adminlte.classes_auth_icon', '') }}"></span>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Hanya izinkan angka pada input nomor_tlpn
+    document.getElementsByName('nomor_tlpn')[0].addEventListener('input', function(e) {
+        e.target.value = e.target.value.replace(/[^0-9]/g, '');
+    });
+</script>
+
+
         {{-- Password field --}}
         <div class="input-group mb-3">
             <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"

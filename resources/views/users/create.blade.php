@@ -27,6 +27,12 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="exampleInputNomorTelepon">Nomor Telepon</label>
+                            <input type="text" class="form-control @error('nomor_tlpn') is-invalid @enderror" id="exampleInputNomorTelepon" placeholder="Nomor Telepon" name="nomor_tlpn" value="{{ old('nomor_tlpn') }}">
+                            @error('nomor_tlpn') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div class="form-group">
                             <label for="exampleInputPassword">Password</label>
                             <input type="password" class="form-control @error('password') is-invalid @enderror" id="exampleInputPassword" placeholder="Password" name="password">
                             @error('password') <span class="text-danger">{{$message}}</span> @enderror

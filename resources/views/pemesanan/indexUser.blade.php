@@ -19,6 +19,7 @@
                             <th>Kode Pemesanan</th>
                             <th>List Barang</th>
                             <th>Total Bayar</th>
+                            <th>Alamat Tujuan</th>
                             <th>Jenis Transaksi</th>
                             <th>Status</th>
                             <th>Opsi</th>
@@ -45,19 +46,25 @@
                                     @endforeach
                                 </td>
                                 <td>{{$item->total_bayar}}</td>
+                                <td>{{$item->alamat}}</td>
                                 <td>{{$item->jenis_transaksi}}</td>
                                 <td>{{$item->status}}</td>
                                 <td>
-                                    @if($item->status != 'dikonfirmasi')
-                                    <a href="{{ route('pemesanan.destroy', $item->kode_pemesanan) }}" onclick="notificationBeforeDelete(event, this)" class="btn btn-danger btn-xs">
+    @if($item->status == 'sedang di kirim')
+        <a href="{{ route('pemesanan.terima', $item->kode_pemesanan) }}" class="btn btn-success btn-xs">
+            terima pesanan
+        </a>
+    @elseif($item->status == 'pesan')
+    <a href="{{ route('pemesanan.batal', $item->kode_pemesanan) }}" onclick="notificationBeforeDelete(event, this)" class="btn btn-danger btn-xs">
                                         Batalkan Pesanan
                                     </a>
-                                    @else
-                                    <button class="btn btn-danger btn-xs" disabled>
-                                        Batalkan Pesanan
-                                    </button>
-                                    @endif
-                                </td>
+    @else
+        <button class="btn btn-danger btn-xs" disabled>
+            Batalkan Pesanan
+        </button>
+    @endif
+</td>
+
                             </tr>
                             @endforeach
                         </tbody>
@@ -82,7 +89,7 @@
 
         function notificationBeforeDelete(event, el) {
             event.preventDefault();
-            if (confirm('Apakah anda yakin akan menghapus data ? ')) {
+            if (confirm('Apakah anda yakin akan membatalkan pesanan ? ')) {
                 $("#delete-form").attr('action', $(el).attr('href'));
                 $("#delete-form").submit();
             }

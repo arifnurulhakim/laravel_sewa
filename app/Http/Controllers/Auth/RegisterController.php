@@ -53,6 +53,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'nomor_tlpn' => ['required', 'string', 'max:15'], // Aturan validasi untuk nomor_tlpn yang harus string dan maksimal 15 karakter
         ]);
     }
 
@@ -68,6 +69,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'nomor_tlpn' => $data['nomor_tlpn'], // Simpan data nomor_tlpn dari form
         ]);
     }
 }

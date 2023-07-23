@@ -3,7 +3,7 @@
 @section('title', 'List Pemesanan')
 
 @section('content_header')
-    <h1 class="m-0 text-dark">List Pemesanan</h1>
+    <h1 class="m-0 text-dark">List Kirim Pesanan</h1>
 @stop
 
 @section('content')
@@ -16,11 +16,11 @@
                             <tr>
                                 <th>No.</th>
                                 <th>Kode Pemesanan</th>
-                                <th>Atas Nama</th>
-                                <th>List pemesanan</th>
+                                <th>List Barang</th>
+                                <th>Total Bayar</th>
                                 <th>Jenis Transaksi</th>
-                                <th>status</th>
-                                <th>aksi</th>
+                                <th>Status</th>
+                                <th>Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -28,9 +28,8 @@
                                 <tr>
                                     <td>{{$key+1}}</td>
                                     <td>{{$item->kode_pemesanan}}</td>
-                                    <td>{{ $item->user_name }}</td>
                                     <td>
-                                    @foreach($pemesanan as $barang)
+                                        @foreach($pemesanan as $barang)
                                             @if($barang->kode_pemesanan === $item->kode_pemesanan)
                                                 <ul>
                                                     <li>
@@ -44,75 +43,35 @@
                                             @endif
                                         @endforeach
                                     </td>
-                                    {{--<td> $item->alamat </td>--}}
-                                    {{--<td> $item->tanggal_mulai </td>--}}
-                                    {{--<td> $item->tanggal_selesai </td>--}}
-                                    {{--<td> $item->tanggal_kembali </td>--}}
-                                    <td> {{$item->jenis_transaksi}} </td>
-                                    <td> {{$item->status}} </td>
-                                    {{--<td> $item->total_bayar </td>--}}
-                                    {{--<td> $item->total_denda </td>--}}
-                   
+                                    <td>{{$item->total_bayar}}</td>
+                                    <td>{{$item->jenis_transaksi}}</td>
+                                    <td>{{$item->status}}</td>
+                                    {{--<td>$item->bukti_pembayaran</td>--}}
+                                    {{--<td>$item->alamat</td>--}}
                                     <td>
-                                        @if($item->status == 'pesanan di terima' && $item->kode_pemesanan)
-
-                                        <div type="button" class="btn btn-warning btn-xs btn-detail" data-id="{{ $item->kode_pemesanan }}" data-toggle="modal" data-target="#detailPemesanan">
-                                            detail
-                                        </div>
-
-                                        <a href="{{ route('pemesanan.sewakan', $item->kode_pemesanan) }}" class="btn btn-success btn-xs">
-                                                Sewakan
+                                        @if($item->status != 'sedang di kirim')
+                                        <a href="{{ route('pemesanan.kirim', $item->kode_pemesanan) }}" class="btn btn-success btn-xs">
+                                                kirim
                                             </a>
-                                            <a href="{{ route('pemesanan.printpenyewaan', ['kode_pemesanan' => $item->kode_pemesanan]) }}" class="btn btn-primary btn-xs">
-                                                                        Cetak PDF
-                                                                    </a>
-
-                                            <a href="{{route('pemesanan.destroy',$item->kode_pemesanan)}}"  onclick="notificationBeforeDelete(event, this)" class="btn btn-danger btn-xs">
-                                                Delete
+                                            <a href="{{ route('pemesanan.printpenyewaan', $item->kode_pemesanan) }}" class="btn btn-primary btn-xs">
+                                                Cetak PDF
                                             </a>
-                                            @elseif($item->status == 'dikembalikan')
-                                            <div type="button" class="btn btn-warning btn-xs btn-detail" data-id="{{ $item->kode_pemesanan }}" data-toggle="modal" data-target="#detailPemesanan">
-                                                detail
-                                            </div>
-
-                                
-                                        <a href="{{ route('pemesanan.selesai', $item->kode_pemesanan) }}" class="btn btn-success btn-xs">
-                                                Selesai
-                                            </a>
-                                            <a href="{{ route('pemesanan.printpenyewaan', ['kode_pemesanan' => $item->kode_pemesanan]) }}" class="btn btn-primary btn-xs">
-                                                                Cetak PDF
-                                                            </a>
-
-    
-                                            <a href="{{route('pemesanan.destroy',$item->kode_pemesanan)}}"  onclick="notificationBeforeDelete(event, this)" class="btn btn-danger btn-xs">
-                                                Delete
-                                            </a>
-                                            @elseif($item->status == 'selesai')
-                                            <div type="button" class="btn btn-warning btn-xs btn-detail" data-id="{{ $item->kode_pemesanan }}" data-toggle="modal" data-target="#detailPemesanan">
-    detail
-</div>
-
-                                
-                                            <button href="{{ route('pemesanan.selesai', $item->kode_pemesanan) }}" class="btn btn-success btn-xs" disabled>
-                                                Selesai
-</button>
-
-                                        @else
-                                        <div type="button" class="btn btn-warning btn-xs btn-detail" data-id="{{ $item->kode_pemesanan }}" data-toggle="modal" data-target="#detailPemesanan">
+                                            <div type="button" class="btn btn-warning btn-xs btn-detail" data-id="{{ $item->kode_pemesanan }}" data-toggle="modal" data-target="#detailBarang">
                                         detail
                                     </div>
                                 
-                                        <a href="{{ route('pemesanan.printpenyewaan', ['kode_pemesanan' => $item->kode_pemesanan]) }}" class="btn btn-primary btn-xs">
-    Cetak PDF
-</a>
-                                            <a href="{{route('pemesanan.destroy', $item->kode_pemesanan)}}"  onclick="notificationBeforeDelete(event, this)" class="btn btn-danger btn-xs">
-                                                Delete
+                                            
+                                           
+                                        @else
+                                        <a href="{{ route('pemesanan.printpenyewaan', $item->kode_pemesanan) }}" class="btn btn-primary btn-xs">
+                                                Cetak PDF
                                             </a>
+                                            <div type="button" class="btn btn-warning btn-xs btn-detail" data-id="{{ $item->kode_pemesanan}}" data-toggle="modal" data-target="#detailBarang">
+                                        detail
+                                    </div>
+                                
                                         @endif
-
-                              
                                     </td>
-                                    
                                 </tr>
                             @endforeach
                         </tbody>
@@ -131,11 +90,11 @@
     </script>
 
     @endif
-   <div class="modal fade" id="detailPemesanan" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+    <div class="modal fade" id="detailBarang" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Pemesanan Detail</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Barang Detail</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -146,7 +105,6 @@
     </div>
   </div>
 </div>
-
 @stop
 
 @push('js')
@@ -155,7 +113,7 @@
         @csrf
     </form>
     <script>
-$('.btn-detail').click(function(e) {
+        $('.btn-detail').click(function(e) {
     e.preventDefault();
     var postId = $(this).data('id');
     $.ajax({
@@ -169,13 +127,19 @@ $('.btn-detail').click(function(e) {
                     <h4>Detail Pemesanan</h4>
                 </div>
                 <hr>
+                <div class="form-group text-center">
+            <img class="img-fluid"src="data:image/jpg;base64,${data.bukti_pembayaran}" alt="bukti pembayaran">
+        </div>
                 <div class="form-group">
+                
     <div class="row">
+     
         <div class="col-sm-6">
             <label for="barang_id">
                 Kode Pemesanan
             </label>
         </div>
+      
         <div class="col-sm-6">
             <p>${data.kode_pemesanan}</p>
         </div>
@@ -232,24 +196,24 @@ $('.btn-detail').click(function(e) {
 <div class="form-group">
     <div class="row">
         <div class="col-sm-6">
-            <label for="tanggal_mulai">
-                Tanggal Mulai
-            </label>
-        </div>
-        <div class="col-sm-6">
-            <p>${data.tanggal_mulai}</p>
-        </div>
-    </div>
-</div>
-<div class="form-group">
-    <div class="row">
-        <div class="col-sm-6">
             <label for="alamat">
                 Alamat
             </label>
         </div>
         <div class="col-sm-6">
             <p>${data.alamat}</p>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="row">
+        <div class="col-sm-6">
+            <label for="tanggal_mulai">
+                Tanggal Mulai
+            </label>
+        </div>
+        <div class="col-sm-6">
+            <p>${data.tanggal_mulai}</p>
         </div>
     </div>
 </div>
@@ -351,6 +315,7 @@ function generateTableRows(pesananDetails) {
     }
     return rows;
 }
+
 
 
 

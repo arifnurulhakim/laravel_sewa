@@ -11,7 +11,7 @@
 <div class="col-12">
 <div class="card">
 <div class="card-body">
-<form action="{{ route('pemesanan.store') }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('pemesanan.bukti') }}" method="POST" enctype="multipart/form-data">
 @csrf
 <div class="form-group">
                         <label for="tanggalMulai">Tanggal Mulai</label>

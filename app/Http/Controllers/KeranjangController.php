@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 
 class KeranjangController extends Controller
@@ -76,6 +77,45 @@ class KeranjangController extends Controller
        
         ]);
     }
+    public function bukti(Request $request)
+    {
+        $user_id = auth()->user()->id;
+    
+        $pemesanan = Pemesanan::join('barangs', 'pemesanans.barang_id', '=', 'barangs.id')
+            ->select('barangs.nama as nama_barang','barangs.harga_sewa as harga_sewa', 'pemesanans.*')
+            ->where('pemesanans.jenis_transaksi','sewa')
+            ->where('pemesanans.users_id', $user_id)
+            ->where('pemesanans.status', 'keranjang')
+            ->get();
+    
+        $validatedData = $request->validate([
+            'tanggal_mulai' => 'required|date',
+            'tanggal_selesai' => 'required|date',
+            'alamat' => 'required|string', // Aturan validasi untuk field alamat
+        ]);
+    
+        $tanggal_mulai = $request->tanggal_mulai;
+        $tanggal_selesai = $request->tanggal_selesai;
+        $alamat = $request->alamat;
+        $total_bayar = 0;
+    
+        foreach ($pemesanan as $item) {
+            $tanggal_selesai = Carbon::parse($request->tanggal_selesai);
+            $tanggal_mulai = Carbon::parse($request->tanggal_mulai);
+    
+            if ($tanggal_selesai && $tanggal_mulai) {
+                $selisih_hari = $tanggal_selesai->diffInDays($tanggal_mulai);
+                $total_bayar += $selisih_hari * ($item->harga_sewa * $item->jumlah_pesanan);
+            }
+        }
+    
+        return view('keranjang.bukti', [
+            'tanggal_mulai' => $tanggal_mulai,
+            'tanggal_selesai' => $tanggal_selesai,
+            'total_bayar' => $total_bayar,
+            'alamat' => $alamat, // Kirim data alamat ke view
+        ])->with('success', 'tanggal berhasil diperbarui.');
+    }
     public function createPembelian()
     {
         $user_id = auth()->user()->id;
@@ -117,6 +157,7 @@ class KeranjangController extends Controller
         $user_id = auth()->user()->id;
         
         // Ubah input sebelum validasi
+        $barang_id = $request->input('barang_id');
         $jumlah_pesanan = $request->input('jumlah_pesanan');
         $jenis_transaksi = $request->input('jenis_transaksi');
         $request->merge(['jumlah_pesanan' => implode(',', $jumlah_pesanan)]);

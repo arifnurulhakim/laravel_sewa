@@ -204,7 +204,7 @@ $menu[]=[  [
     'classes_auth_footer' => '',
     'classes_auth_icon' => '',
     'classes_auth_btn' => 'btn-flat btn-primary',
-
+   
     /*
     |--------------------------------------------------------------------------
     | Admin Panel Classes
@@ -217,7 +217,8 @@ $menu[]=[  [
     |
     */
 
-    'classes_body' => '',
+   'classes_body' => '',
+
     'classes_brand' => '',
     'classes_brand_text' => '',
     'classes_content_wrapper' => '',
@@ -388,6 +389,16 @@ $menu[]=[  [
                 [
                     'text' => 'Konfirmasi Pesanan',
                     'url'  => 'KonfirmasiPesanan',
+                    'icon'  => 'fa fa-check',
+                ],
+                [
+                    'text' => 'Proses Pesanan',
+                    'url'  => 'ProsesPesanan',
+                    'icon'  => 'fa fa-check',
+                ],
+                [
+                    'text' => 'Kirim Pesanan',
+                    'url'  => 'KirimPesanan',
                     'icon'  => 'fa fa-check',
                 ],
                 [

@@ -41,18 +41,21 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|confirmed'
+            'password' => 'required|confirmed',
+            'nomor_tlpn' => 'required|numeric|digits_between:8,15'
         ]);
+    
         $array = $request->only([
-            'name', 'email', 'password'
+            'name', 'email', 'password', 'nomor_tlpn' // Sertakan 'nomor_tlpn' di sini
         ]);
+    dd($array);
         $array['password'] = bcrypt($array['password']);
         $user = User::create($array);
+    
         return redirect()->route('users.index')
             ->with('success_message', 'Berhasil menambah user baru');
-
     }
-
+    
     /**
      * Display the specified resource.
      *

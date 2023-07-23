@@ -21,6 +21,8 @@ class Pemesanan extends Model
         'konfirm',
         'jenis_transaksi',
         'status',
+        'bukti_pembayaran',
+        'alamat'
     ];
 
     public function barang()
