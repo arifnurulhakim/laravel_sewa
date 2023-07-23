@@ -378,36 +378,37 @@ $menu[]=[  [
         // Kelompokkan menu admin
         [
             'text' => 'Menu Admin',
-            'icon' => 'fa fa-user-shield',
+            'icon' => 'fas fa-user-shield',
             'can' => 'adminAccess',
             'submenu' => [
                 [
                     'text' => 'Pemesanan',
                     'url'  => '/pemesanan',
-                    'icon'  => 'fa fa-list-alt',
+                    'icon'  => 'fas fa-list-alt',
                 ],
                 [
                     'text' => 'Konfirmasi Pesanan',
                     'url'  => 'KonfirmasiPesanan',
-                    'icon'  => 'fa fa-check',
+                    'icon'  => 'fas fa-check',
                 ],
                 [
                     'text' => 'Proses Pesanan',
                     'url'  => 'ProsesPesanan',
-                    'icon'  => 'fa fa-check',
+                    'icon'  => 'fas fa-cogs',
                 ],
                 [
                     'text' => 'Kirim Pesanan',
                     'url'  => 'KirimPesanan',
-                    'icon'  => 'fa fa-check',
+                    'icon'  => 'fas fa-truck',
                 ],
                 [
                     'text' => 'Konfirmasi Pengembalian',
                     'url'  => 'KonfirmasiPengembalian',
-                    'icon'  => 'fa fa-check-square',
+                    'icon'  => 'fas fa-undo',
                 ],
             ],
         ],
+        
     ],
     
 
